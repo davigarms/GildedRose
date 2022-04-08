@@ -36,80 +36,111 @@ namespace GildedRose.Console
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            foreach (var item in Items)
             {
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-                {
-                    if (Items[i].Quality > 0)
-                    {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
-                    }
-                }
-                else
-                {
-                    if (Items[i].Quality < 50)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (Items[i].SellIn < 11)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-
-                            if (Items[i].SellIn < 6)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
-
-                if (Items[i].SellIn < 0)
-                {
-                    if (Items[i].Name != "Aged Brie")
-                    {
-                        if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (Items[i].Quality > 0)
-                            {
-                                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                                {
-                                    Items[i].Quality = Items[i].Quality - 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
-                        }
-                    }
-                    else
-                    {
-                        if (Items[i].Quality < 50)
-                        {
-                            Items[i].Quality = Items[i].Quality + 1;
-                        }
-                    }
-                }
+                DecreaseSellInDate(item);
+                UpdateNormalProductsQuality(item);
+                UpdateAgedBrieQuality(item);
+                UpdateBackStagePassesQuality(item);
             }
         }
 
+        private void UpdateNormalProductsQuality(Item item)
+        {
+            if (SulfurasHandOfRagnaros(item) || BackstagePasses(item) || AgedBrie(item)) return;
+            DecreaseQualityWhenGreaterThanZero(item);
+            if (SellInDateLessThanZero(item))
+                DecreaseQualityWhenGreaterThanZero(item);
+        }
+
+        private void UpdateAgedBrieQuality(Item item)
+        {
+            if (!AgedBrie(item)) return;
+            IncreaseQualityWhenLessThanFifty(item);
+            if (SellInDateLessThanZero(item))
+                IncreaseQualityWhenLessThanFifty(item);
+        }
+        
+        private void UpdateBackStagePassesQuality(Item item)
+        {
+            if (!BackstagePasses(item)) return;
+            IncreaseQualityWhenLessThanFifty(item);
+            IncreaseQualityWhenCloserToAConcertDate(item);
+            if (SellInDateLessThanZero(item))
+                DropQualityToZero(item);
+        }
+
+        private void IncreaseQualityWhenCloserToAConcertDate(Item item)
+        {
+            if (!BackstagePasses(item)) return;
+            if (item.SellIn < 11)
+                IncreaseQualityWhenLessThanFifty(item);
+
+            if (item.SellIn < 6)
+                IncreaseQualityWhenLessThanFifty(item);
+        }
+
+        private void DropQualityToZero(Item item)
+        {
+            item.Quality -= item.Quality;
+        }
+
+        private void DecreaseSellInDate(Item item)
+        {
+            if (!SulfurasHandOfRagnaros(item))
+                item.SellIn -= 1;
+        }
+
+        private void IncreaseQualityWhenLessThanFifty(Item item)
+        {
+            if (QualityLessThanFifty(item))
+                IncreaseQuality(item);
+        }
+        
+        private void DecreaseQualityWhenGreaterThanZero(Item item)
+        {
+            if (QualityGreaterThanZero(item))
+                DecreaseQuality(item);
+        }
+        
+        private void IncreaseQuality(Item item)
+        {
+            item.Quality += 1;
+        }
+
+        private void DecreaseQuality(Item item)
+        {
+            item.Quality -= 1;
+        }
+
+        private bool SulfurasHandOfRagnaros(Item item)
+        {
+            return item.Name == "Sulfuras, Hand of Ragnaros";
+        }
+
+        private bool BackstagePasses(Item item)
+        {
+            return item.Name == "Backstage passes to a TAFKAL80ETC concert";
+        }
+
+        private bool AgedBrie(Item item)
+        {
+            return item.Name == "Aged Brie";
+        }
+
+        private bool QualityLessThanFifty(Item item)
+        {
+            return item.Quality < 50;
+        }
+        private bool QualityGreaterThanZero(Item item)
+        {
+            return item.Quality > 0;
+        }
+
+        private bool SellInDateLessThanZero(Item item)
+        {
+            return item.SellIn < 0;
+        }
     }
 
     public class Item
@@ -120,5 +151,4 @@ namespace GildedRose.Console
 
         public int Quality { get; set; }
     }
-
 }
