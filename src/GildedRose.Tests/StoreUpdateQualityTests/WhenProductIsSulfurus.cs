@@ -14,14 +14,14 @@ namespace GildedRose.Tests.StoreUpdateQualityTests
             _store = new Store();
         }
         
-        [TestCase(100, 100)]
-        [TestCase(80, 80)]
-        [TestCase(50, 50)]
-        public void UpdateQuality_never_decreases_sell_in_date_and_quality(int quality, int expectedQuality)
+        [TestCase(100, 100, 10)]
+        [TestCase(80, 80, 5)]
+        [TestCase(50, 50, 0)]
+        public void UpdateQuality_never_decreases_sell_in_date_and_quality(int quality, int expectedQuality, int sellInt)
         {
-            _store.AddProduct("Sulfuras, Hand of Ragnaros", 0, quality);
+            _store.AddProduct("Sulfuras, Hand of Ragnaros", sellInt, quality);
             _store.UpdateQuality();
-            Assert.That(_store.GetProducts()[0].SellIn, Is.EqualTo(0));
+            Assert.That(_store.GetProducts()[0].SellIn, Is.EqualTo(sellInt));
             Assert.That(_store.GetProducts()[0].Quality, Is.EqualTo(expectedQuality));
         }
     }
