@@ -36,28 +36,32 @@ namespace GildedRose.Lib
             {
                 DecreaseSellInDate(item);
                 UpdateNormalProductsQuality(item);
+                UpdateConjuredProductsQuality(item);
                 UpdateAgedBrieQuality(item);
                 UpdateBackStagePassesQuality(item);
             }
         }
 
-        private void UpdateNormalProductsQuality(Product product)
+        private static void UpdateNormalProductsQuality(Product product)
         {
-            if (SulfurasHandOfRagnaros(product) || BackstagePasses(product) || AgedBrie(product)) return;
-            DecreaseQualityWhenGreaterThanZero(product);
-            if (SellInDateLessThanZero(product))
-                DecreaseQualityWhenGreaterThanZero(product);
+            if (Normal(product)) return;
+            DecreaseQualityWhenGreaterThanZero(product, SellInDateLessThanZero(product) ? 2 : 1);
         }
 
-        private void UpdateAgedBrieQuality(Product product)
+       
+        private static void UpdateConjuredProductsQuality(Product product)
+        {
+            if (!Conjured(product)) return;
+            DecreaseQualityWhenGreaterThanZero(product, SellInDateLessThanZero(product) ? 4 : 2);
+        }
+
+        private static void UpdateAgedBrieQuality(Product product)
         {
             if (!AgedBrie(product)) return;
-            IncreaseQualityWhenLessThanFifty(product);
-            if (SellInDateLessThanZero(product))
-                IncreaseQualityWhenLessThanFifty(product);
+            IncreaseQualityWhenLessThanFifty(product, SellInDateLessThanZero(product) ? 2 : 1);
         }
 
-        private void UpdateBackStagePassesQuality(Product product)
+        private static void UpdateBackStagePassesQuality(Product product)
         {
             if (!BackstagePasses(product)) return;
             IncreaseQualityWhenLessThanFifty(product);
@@ -66,7 +70,7 @@ namespace GildedRose.Lib
                 DropQualityToZero(product);
         }
 
-        private void IncreaseQualityWhenCloserToAConcertDate(Product product)
+        private static void IncreaseQualityWhenCloserToAConcertDate(Product product)
         {
             if (!BackstagePasses(product)) return;
             if (product.SellIn < 11)
@@ -76,43 +80,53 @@ namespace GildedRose.Lib
                 IncreaseQualityWhenLessThanFifty(product);
         }
 
-        private void DropQualityToZero(Product product)
+        private static void DropQualityToZero(Product product)
         {
             product.Quality -= product.Quality;
         }
 
-        private void DecreaseSellInDate(Product product)
+        private static void DecreaseSellInDate(Product product)
         {
             if (!SulfurasHandOfRagnaros(product))
                 product.SellIn -= 1;
         }
 
-        private void IncreaseQualityWhenLessThanFifty(Product product)
+        private static void IncreaseQualityWhenLessThanFifty(Product product, int days = 1)
         {
-            if (QualityLessThanFifty(product))
-                IncreaseQuality(product);
+            for (var i = 0; i < days; i++)
+            {
+                if (QualityLessThanFifty(product))
+                    IncreaseQualityByOne(product);
+            }
         }
 
-        private void DecreaseQualityWhenGreaterThanZero(Product product)
+        private static void DecreaseQualityWhenGreaterThanZero(Product product, int days = 1)
         {
-            if (QualityGreaterThanZero(product))
-                DecreaseQuality(product);
+            for (var i = 0; i < days; i++)
+            {
+                if (QualityGreaterThanZero(product))
+                    DecreaseQualityByOne(product);
+            }
         }
 
-        private void IncreaseQuality(Product product) => product.Quality += 1;
+        private static void IncreaseQualityByOne(Product product) => product.Quality += 1;
 
-        private void DecreaseQuality(Product product) => product.Quality -= 1;
+        private static void DecreaseQualityByOne(Product product) => product.Quality -= 1;
 
-        private bool SulfurasHandOfRagnaros(Product product) => product.Name == "Sulfuras, Hand of Ragnaros";
+        private static bool SulfurasHandOfRagnaros(Product product) => product.Name == "Sulfuras, Hand of Ragnaros";
 
-        private bool BackstagePasses(Product product) => product.Name == "Backstage passes to a TAFKAL80ETC concert";
+        private static bool BackstagePasses(Product product) => product.Name == "Backstage passes to a TAFKAL80ETC concert";
 
-        private bool AgedBrie(Product product) => product.Name == "Aged Brie";
+        private static bool AgedBrie(Product product) => product.Name == "Aged Brie";
+        
+        private static bool Conjured(Product product) => product.Name == "Conjured";
+        
+        private static bool Normal(Product product) => SulfurasHandOfRagnaros(product) || BackstagePasses(product) || AgedBrie(product) || Conjured(product);
 
-        private bool QualityLessThanFifty(Product product) => product.Quality < 50;
+        private static bool QualityLessThanFifty(Product product) => product.Quality < 50;
 
-        private bool QualityGreaterThanZero(Product product) => product.Quality > 0;
+        private static bool QualityGreaterThanZero(Product product) => product.Quality > 0;
 
-        private bool SellInDateLessThanZero(Product product) => product.SellIn < 0;
+        private static bool SellInDateLessThanZero(Product product) => product.SellIn < 0;
     }
 }
