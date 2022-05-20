@@ -10,9 +10,9 @@ namespace GildedRose.Tests.UpdateQualityTests
         [TestCase(0, -1)]
         public void An_updated_should_decrease_the_sellIn_date_by_1(int sellIn, int expectedSellIn)
         {
-            AddItems("product", sellIn, 0);
-            App.UpdateQuality();
-            Assert.That(App.Items[0].SellIn, Is.EqualTo(expectedSellIn));
+            _sut.AddProduct("product", sellIn, 0);
+            _sut.UpdateQuality();
+            Assert.That(_sut.Products[0].SellIn, Is.EqualTo(expectedSellIn));
         }
 
         [TestCase(10, 9)]
@@ -21,9 +21,9 @@ namespace GildedRose.Tests.UpdateQualityTests
         [TestCase(0, 0)]
         public void When_the_sellIn_date_has_not_passed_an_updated_should_decrease_the_quality_by_1_until_0(int quality, int expectedQuality)
         {
-            AddItems("product", 1, quality);
-            App.UpdateQuality();
-            Assert.That(App.Items[0].Quality, Is.EqualTo(expectedQuality));
+            _sut.AddProduct("product", 1, quality);
+            _sut.UpdateQuality();
+            Assert.That(_sut.Products[0].Quality, Is.EqualTo(expectedQuality));
         }
 
         [TestCase(10, 8)]
@@ -32,9 +32,9 @@ namespace GildedRose.Tests.UpdateQualityTests
         [TestCase(0, 0)]
         public void When_the_sellIn_date_has_passed_an_updated_should_decrease_the_quality_by_2_until_0(int quality, int expectedQuality)
         {
-            AddItems("product", 0, quality);
-            App.UpdateQuality();
-            Assert.That(App.Items[0].Quality, Is.EqualTo(expectedQuality));
+            _sut.AddProduct("product", 0, quality);
+            _sut.UpdateQuality();
+            Assert.That(_sut.Products[0].Quality, Is.EqualTo(expectedQuality));
         }
     }
 }

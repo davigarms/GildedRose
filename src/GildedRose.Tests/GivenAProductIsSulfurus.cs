@@ -10,10 +10,10 @@ namespace GildedRose.Tests.UpdateQualityTests
         [TestCase(50, 50)]
         public void It_never_has_to_be_sold_and_it_never_decreases_in_quality(int quality, int expectedQuality)
         {
-            AddItems("Sulfuras, Hand of Ragnaros", 0, quality);
-            App.UpdateQuality();
-            Assert.That(App.Items[0].SellIn, Is.EqualTo(0));
-            Assert.That(App.Items[0].Quality, Is.EqualTo(expectedQuality));
+            _sut.AddProduct("Sulfuras, Hand of Ragnaros", 0, quality);
+            _sut.UpdateQuality();
+            Assert.That(_sut.Products[0].SellIn, Is.EqualTo(0));
+            Assert.That(_sut.Products[0].Quality, Is.EqualTo(expectedQuality));
         }
     }
 }
