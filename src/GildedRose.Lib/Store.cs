@@ -46,7 +46,7 @@ namespace GildedRose.Lib
 
         private static void UpdateNormalProductsQuality(Product product)
         {
-            if (Normal(product)) return;
+            if (!Normal(product)) return;
             DecreaseQualityWhenGreaterThanZero(product, SellInDateLessThanZero(product) ? 2 : 1);
         }
 
@@ -123,7 +123,7 @@ namespace GildedRose.Lib
         
         private static bool Conjured(Product product) => product.Name == "Conjured";
         
-        private static bool Normal(Product product) => SulfurasHandOfRagnaros(product) || BackstagePasses(product) || AgedBrie(product) || Conjured(product);
+        private static bool Normal(Product product) => !(SulfurasHandOfRagnaros(product) || BackstagePasses(product) || AgedBrie(product) || Conjured(product));
 
         private static bool QualityLessThanFifty(Product product) => product.Quality < 50;
 

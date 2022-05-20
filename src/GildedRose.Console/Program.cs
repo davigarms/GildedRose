@@ -4,14 +4,14 @@ using GildedRose.Lib;
 
 namespace GildedRose.Console
 {
-    public class Program
+    public static class Program
     {
-       public static async Task Main()
+        private static void Main()
         {
-            await Initialise();
+            Initialise();
         }
 
-        private static async Task Initialise()
+       private static void Initialise()
         {
             var products = new List<Product>
             {

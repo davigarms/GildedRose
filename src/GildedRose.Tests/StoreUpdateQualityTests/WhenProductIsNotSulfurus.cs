@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace GildedRose.Tests.StoreUpdateQualityTests
 {
     [TestFixture]
-    public class WhenAnyProduct
+    public class WhenProductIsNotSulfurus
     {
         private Store _store;
 
@@ -17,7 +17,7 @@ namespace GildedRose.Tests.StoreUpdateQualityTests
         [TestCase(20, 19)]
         [TestCase(10, 9)]
         [TestCase(0, -1)]
-        public void UpdateQuality_should_decrease_the_sellIn_date_by_1(int sellIn, int expectedSellIn)
+        public void UpdateQuality_decrease_the_sellIn_date_by_1(int sellIn, int expectedSellIn)
         {
             _store.AddProduct("product", sellIn, 0);
             _store.UpdateQuality();

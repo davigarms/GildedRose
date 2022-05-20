@@ -18,7 +18,7 @@ namespace GildedRose.Tests.StoreUpdateQualityTests
         [TestCase(10, 11)]
         [TestCase(49, 50)]
         [TestCase(50, 50)]
-        public void UpdateQuality_should_increase_the_quality_by_1_until_50_when_the_sellIn_date_has_not_passed_(int quality, int expectedQuality)
+        public void UpdateQuality_increase_the_quality_by_1_until_50_when_the_sellIn_date_has_not_passed(int quality, int expectedQuality)
         {
             _store.AddProduct("Aged Brie", 1, quality);
             _store.UpdateQuality();
@@ -29,7 +29,7 @@ namespace GildedRose.Tests.StoreUpdateQualityTests
         [TestCase(10, 12)]
         [TestCase(49, 50)]
         [TestCase(50, 50)]
-        public void UpdateQuality_should_increase_the_quality_by_2_until_50_when_the_sellIn_date_has_passed_(int quality, int expectedQuality)
+        public void UpdateQuality_increase_the_quality_by_2_until_50_when_the_sellIn_date_has_passed(int quality, int expectedQuality)
         {
             _store.AddProduct("Aged Brie", 0, quality);
             _store.UpdateQuality();
