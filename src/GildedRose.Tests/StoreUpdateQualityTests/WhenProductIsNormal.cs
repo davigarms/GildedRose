@@ -1,4 +1,4 @@
-﻿using GildedRose.Console;
+﻿using GildedRose.Lib;
 using NUnit.Framework;
 
 namespace GildedRose.Tests.StoreUpdateQualityTests

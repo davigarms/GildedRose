@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using GildedRose.Lib;
 
 namespace GildedRose.Console
 {
@@ -30,7 +31,6 @@ namespace GildedRose.Console
             };
 
             var store = new Store(products);
-            
             store.UpdateQuality();
         }
     }

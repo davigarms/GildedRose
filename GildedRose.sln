@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{B8B88B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GildedRose.Console", "src\GildedRose.Console\GildedRose.Console.csproj", "{F2E879A9-7F1C-4C34-AB0D-2662F9815046}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GildedRose.Lib", "src\GildedRose.Lib\GildedRose.Lib.csproj", "{129B156B-83DE-4A2C-A4AB-AC52AE0A47D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{F2E879A9-7F1C-4C34-AB0D-2662F9815046}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2E879A9-7F1C-4C34-AB0D-2662F9815046}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2E879A9-7F1C-4C34-AB0D-2662F9815046}.Release|Any CPU.Build.0 = Release|Any CPU
+		{129B156B-83DE-4A2C-A4AB-AC52AE0A47D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{129B156B-83DE-4A2C-A4AB-AC52AE0A47D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{129B156B-83DE-4A2C-A4AB-AC52AE0A47D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{129B156B-83DE-4A2C-A4AB-AC52AE0A47D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

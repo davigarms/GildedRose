@@ -1,4 +1,4 @@
-﻿namespace GildedRose.Console
+﻿namespace GildedRose.Lib
 {
     public class Product
     {
