@@ -8,9 +8,7 @@ namespace GildedRose.Console
     {
        public static async Task Main()
         {
-            System.Console.WriteLine("OMGHAI!");
             await Initialise();
-            System.Console.ReadKey();
         }
 
         private static async Task Initialise()
@@ -29,9 +27,11 @@ namespace GildedRose.Console
                 },
                 new Product { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 }
             };
-
+            
             var store = new Store(products);
+            System.Console.WriteLine("OMGHAI!");
             store.UpdateQuality();
+            store.DisplayProducts();
         }
     }
 }

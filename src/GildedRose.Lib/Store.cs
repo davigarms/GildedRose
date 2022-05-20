@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GildedRose.Lib
 {
     public class Store
     {
-        private readonly IList<Product> _products;
+        private readonly List<Product> _products;
 
-        public Store(IList<Product> products = null)
+        public Store(List<Product> products = null)
         {
             _products = products ?? new List<Product>();
         }
@@ -128,5 +130,13 @@ namespace GildedRose.Lib
         private static bool QualityGreaterThanZero(Product product) => product.Quality > 0;
 
         private static bool SellInDateLessThanZero(Product product) => product.SellIn < 0;
+
+        public void DisplayProducts()
+        {
+            _products.ForEach(product =>
+            {
+                Console.WriteLine($"Product: {product.Name}, Quality: {product.Quality}, Sell in {product.SellIn} days");
+            });
+        }
     }
 }
